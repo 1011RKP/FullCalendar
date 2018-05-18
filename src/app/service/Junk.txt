@@ -1,0 +1,586 @@
+
+  // pto(): void {
+  //   this.url = "/_api/web/lists/getByTitle('IT RSVP')/items?$select=Title,EndDate,EventDate,Event_x0020_Type,StartDate,ID,EndDate0&$filter=StartDate ge datetime'" + this.today.toISOString() + "'";
+  //   this._service.getlistItems(this.url).subscribe((data: any) => {
+  //     this.cal = data.d.results;
+  //     for (let i = 0; i < this.cal.length; i++) {
+  //       if (data.d.results[i].Event_x0020_Type == "PTO") {
+  //         this.ptoObj = {
+  //           title: data.d.results[i].Title,
+  //           start: moment(data.d.results[i].StartDate).format("YYYY-MM-DD"),
+  //           end: moment(data.d.results[i].EndDate0).format("YYYY-MM-DD"),
+  //           backgroundColor: "#fa8d29",
+  //           borderColor: "#fa8d29",
+  //           className: "eventClass"
+  //         };
+  //         this.ptoCalendar.push(this.ptoObj);
+  //       }        
+  //     }
+  //     console.log(this.ptoCalendar);
+  //     this.calendarOptions = {
+  //       editable: true,
+  //       eventLimit: false,
+  //       header: {
+  //         left: 'prev,next today',
+  //         center: 'title',
+  //         right: 'month,agendaWeek,agendaDay,listMonth'
+  //       },
+  //       events: this.ptoCalendar
+  //     };
+  //   })
+  // }
+// ofo(): void {
+// }
+// sysMain(): void {
+// }
+// sDown(): void {
+// }
+// this.calObj = {
+        //   title: data.d.results[i].Title,
+        //   start: moment(data.d.results[i].StartDate).format("YYYY-MM-DD"),
+        //   end: moment(data.d.results[i].EndDate0).format("YYYY-MM-DD"),
+        //   backgroundColor: "#ff5252",
+        //   borderColor: "#ff5252",
+        //   className: "event"
+        // }
+         // = new obj(this.title, this.start, this.end, this.backgroundColor, this.borderColor, this.className);
+// [
+//   {
+//     title: data.d.results[0].Title,
+//     start: moment(data.d.results[0].StartDate).format("YYYY-MM-DD"),
+//     end: moment(data.d.results[0].EndDate0).format("YYYY-MM-DD")
+//   },
+//   {
+//     title: data.d.results[1].Title,
+//     start: moment(data.d.results[1].StartDate).format("YYYY-MM-DD"),
+//     end: moment(data.d.results[1].EndDate0).format("YYYY-MM-DD")
+//   },
+//   {
+//     title: data.d.results[2].Title,
+//     start: moment(data.d.results[2].StartDate).format("YYYY-MM-DD"),
+//     end: moment(data.d.results[2].EndDate0).format("YYYY-MM-DD")
+//   },
+//   {
+//     title: data.d.results[3].Title,
+//     start: moment(data.d.results[3].StartDate).format("YYYY-MM-DD"),
+//     end: moment(data.d.results[3].EndDate0).format("YYYY-MM-DD")
+//   },
+//   {
+//     title: data.d.results[4].Title,
+//     start: moment(data.d.results[4].StartDate).format("YYYY-MM-DD"),
+//     end: moment(data.d.results[4].EndDate0).format("YYYY-MM-DD")
+//   },
+//   {
+//     title: data.d.results[5].Title,
+//     start: moment(data.d.results[5].StartDate).format("YYYY-MM-DD"),
+//     end: moment(data.d.results[5].EndDate0).format("YYYY-MM-DD")
+//   },
+//   {
+//     title: data.d.results[6].Title,
+//     start: moment(data.d.results[6].StartDate).format("YYYY-MM-DD"),
+//     end: moment(data.d.results[6].EndDate0).format("YYYY-MM-DD")
+//   },
+// ]
+
+
+<!-- <button type="button" class="btn btn-primary" >Create template modal</button> -->
+
+<!-- <div class="modal fade" id="calendar" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 style="margin:0px!important;font-size:20px!important;font-weight:bold;text-align: center"> IT Calendar</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-body">
+              <div class="row">
+                <div class="row">
+                  <div class="text-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary" (click)="fullCalendar()">
+                        <i class="fa fa-calendar" aria-hidden="true"> </i> Full Calendar</button>
+                      <button type="button" class="btn btn-pto" (click)="ptocalendar()">
+                        <i class="fa fa-clock-o" aria-hidden="true"> </i> PTO</button>
+                      <button type="button" class="btn btn-ofo" (click)="ofocalendar()">
+                        <i class="fa fa-building-o" aria-hidden="true"> </i> Out of Office</button>
+                      <button type="button" class="btn btn-sysMain" (click)="sysMaincalendar()">
+                        <i class="fa fa-laptop" aria-hidden="true"> </i> System Maintenance</button>
+                      <button type="button" class="btn btn-sDown" (click)="sDowncalendar()">
+                        <i class="fa fa-server" aria-hidden="true"> </i> Server Down</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="loadingGif">
+                  <img class="loadingGif" src="/sites/it/SiteAssets/ITWhatshappening/loading.gif">
+                </div>
+                <div *ngIf="calendarOptions">
+                  <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
+                </div>
+              </div>
+              <div class="row" style="margin-top:5px;">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
+import { Form, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { sp } from "sp-pnp-js"
+import { BsDatepickerConfig } from 'ngx-bootstrap';
+import * as moment from "moment";
+import { CalendarComponent } from 'ng-fullcalendar';
+import { Options } from 'fullcalendar';
+import { obj, event } from './obj';
+import { ServiceComponent } from "./service/service.component"
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  searchdataresults: any; searchEvent: Date; data: any;
+  collection = []; collectionLength: number; filter: any;
+  searchdata: any = null; emptySearchResults: any = null;
+  onloadData: any = null; today = new Date();
+  startDate; endDate; announcementsFilter: string;
+  danger: string = null; informarion: string = null; success: string = null;
+  announcementsData: any; loadingGif: string = "show";
+  calendarOptions: Options;
+  ptocalendarOptions: Options;
+  displayEvent: any; fullCalendarData: obj[] = []; calObj: any;
+  cal: event[] = []; cal2: event[] = [];
+  url: string;
+
+  modalRef: BsModalRef;   modalRef2: BsModalRef;
+  
+  dateSubmittedConfig: Partial<BsDatepickerConfig>;
+
+  @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+  
+  constructor(private _service: ServiceComponent,private modalService: BsModalService) {
+    this.dateSubmittedConfig = Object.assign({},
+      {
+        containerClass: 'theme-dark-blue'
+      });
+    for (let i = 1; i <= this.collectionLength; i++) {
+      this.collection.push(`item ${i}`);
+    }
+  }
+
+  onSearch(): void {
+    this.startDate = moment(this.searchEvent[0]).format("YYYY-MM-DD") + 'T12:00:00Z';
+    this.endDate = moment(this.searchEvent[1]).format("YYYY-MM-DD") + 'T12:00:00Z';
+    this.filter = "(StartDate ge datetime'" + this.startDate + "')" + 'and' + "(StartDate le datetime'" + this.endDate + "')";
+    sp.web.lists.getByTitle("IT RSVP").items.select("Title", "EndDate", "EventDate", "ID", "StartDate", "EndDate0").filter(this.filter).orderBy("StartDate").get().then(r => {
+      this.onloadData = "Show Only Search Results";
+      if (r.length > 0) {
+        this.emptySearchResults = null;
+        this.searchdata = "data";
+        this.searchdataresults = r;
+      } else {
+        this.searchdata = null;
+        this.emptySearchResults = "No Results"
+      }
+      console.log(r);
+    });
+  }
+
+  ngOnInit() {
+    this.startDate = moment(this.today).format("YYYY-MM-DD") + 'T00:00:00.000Z';
+    this.filter = "StartDate ge datetime'" + this.startDate + "'";
+    sp.web.lists.getByTitle("IT RSVP").items.select("Title", "EndDate", "Event_x0020_Type", "EventDate", "ID", "StartDate", "EndDate0").filter(this.filter).orderBy("StartDate").get().then(r => {
+      this.data = r;
+      this.collectionLength = this.data.length;
+    });
+
+    this.announcementsFilter = "Expires ge datetime'" + this.today.toISOString() + "'";
+    sp.web.lists.getByTitle("IT Announcements").items.select("Title", "Body", "Announcements_x0020_Type", "ID", "Expires").filter(this.announcementsFilter).orderBy("Expires").get().then(r => {
+      this.announcementsData = r;
+      console.log(r);
+      for (let i = 0; i < r.length; i++) {
+        switch (r[i].Announcements_x0020_Type) {
+          case "System outage"://red
+            this.danger = "Down Time";
+            this.informarion = null;
+            this.success = null;
+            break;
+          case "Down of bug or error":
+            this.danger = "Down Time";
+            this.informarion = null;
+            this.success = null;
+            break;
+          case "Informational":
+            this.informarion = "Information";
+            this.success = null;
+            this.danger = null;
+            break;
+          case "Patching / Maintenance"://orange
+            this.success = "Success";
+            this.informarion = null;
+            this.danger = null;
+            break;
+          case "Down for system maintenance":
+            this.success = "Success";
+            this.informarion = null;
+            this.danger = null;
+            break;
+        }
+      }
+    });
+  }
+
+  showAllevents(): void {
+    this.onloadData = null;
+    this.emptySearchResults = null;
+    this.searchdata = null;
+  }
+
+  showCalendar():void {  debugger
+    this.url = "/_api/web/lists/getByTitle('IT RSVP')/items?$select=Title,EndDate,EventDate,Event_x0020_Type,StartDate,ID,EndDate0&$filter=StartDate ge datetime'" + this.today.toISOString() + "'";
+    this._service.getlistItems(this.url).subscribe((data: any) => {
+      this.cal = data.d.results;
+      for (let i = 0; i < this.cal.length; i++) {
+        switch (data.d.results[i].Event_x0020_Type) {
+          case "PTO":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#fa8d29",
+              borderColor: "#fa8d29",
+              className: "eventClass"
+            };
+            break;
+          case "Out of office":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#448aff",
+              borderColor: "#448aff",
+              className: "eventClass"
+            };
+            break;
+          case "System maintenance":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#11c15b",
+              borderColor: "#11c15b",
+              className: "eventClass"
+            };
+            break;
+          case "Server down":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#ff5252",
+              borderColor: "#ff5252",
+              className: "eventClass"
+            };
+        }
+        this.fullCalendarData.push(this.calObj);
+      }      
+      this.loadingGif = '';
+      this.calendarOptions = {
+        editable: true,
+        eventLimit: false,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        events: this.fullCalendarData
+      };
+    });
+  }
+
+  ptocalendar(): void {
+    this.calendarOptions = null; this.calObj = null; this.fullCalendarData = [];
+    this.loadingGif = 'show';
+    this.url = "/_api/web/lists/getByTitle('IT RSVP')/items?$select=Title,EndDate,EventDate,Event_x0020_Type,StartDate,ID,EndDate0&$filter=StartDate ge datetime'" + this.today.toISOString() + "'";
+    this._service.getlistItems(this.url).subscribe((data: any) => {
+      this.cal = data.d.results;
+      for (let i = 0; i < this.cal.length; i++) {
+        if (data.d.results[i].Event_x0020_Type == "PTO") {
+          this.calObj = {
+            title: data.d.results[i].Title,
+            start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+            end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+            backgroundColor: "#fa8d29",
+            borderColor: "#fa8d29",
+            className: "eventClass"
+          };
+          this.fullCalendarData.push(this.calObj);
+        }
+      }
+      this.loadingGif = '';
+      this.calendarOptions = {
+        editable: true,
+        eventLimit: false,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        events: this.fullCalendarData
+      };
+    })
+  }
+
+  ofocalendar(): void {
+    this.calendarOptions = null; this.calObj = null; this.fullCalendarData = [];
+    this.loadingGif = 'show';
+    this.url = "/_api/web/lists/getByTitle('IT RSVP')/items?$select=Title,EndDate,EventDate,Event_x0020_Type,StartDate,ID,EndDate0&$filter=StartDate ge datetime'" + this.today.toISOString() + "'";
+    this._service.getlistItems(this.url).subscribe((data: any) => {
+      this.cal = data.d.results;
+      for (let i = 0; i < this.cal.length; i++) {
+        if (data.d.results[i].Event_x0020_Type == "Out of office") {
+          this.calObj = {
+            title: data.d.results[i].Title,
+            start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+            end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+            backgroundColor: "#448aff",
+            borderColor: "#448aff",
+            className: "eventClass"
+          };
+          this.fullCalendarData.push(this.calObj);
+        }
+      }
+      this.loadingGif = '';
+      this.calendarOptions = {
+        editable: true,
+        eventLimit: false,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        events: this.fullCalendarData
+      };
+    })
+  }
+
+  sysMaincalendar(): void {
+    this.calendarOptions = null; this.calObj = null; this.fullCalendarData = [];
+    this.loadingGif = 'show';
+    this.url = "/_api/web/lists/getByTitle('IT RSVP')/items?$select=Title,EndDate,EventDate,Event_x0020_Type,StartDate,ID,EndDate0&$filter=StartDate ge datetime'" + this.today.toISOString() + "'";
+    this._service.getlistItems(this.url).subscribe((data: any) => {
+      this.cal = data.d.results;
+      for (let i = 0; i < this.cal.length; i++) {
+        if (data.d.results[i].Event_x0020_Type == "System maintenance") {
+          this.calObj = {
+            title: data.d.results[i].Title,
+            start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+            end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+            backgroundColor: "#11c15b",
+            borderColor: "#11c15b",
+            className: "eventClass"
+          };
+          this.fullCalendarData.push(this.calObj);
+        }
+      }
+      this.loadingGif = '';
+      this.calendarOptions = {
+        editable: true,
+        eventLimit: false,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        events: this.fullCalendarData
+      };
+    })
+  }
+
+  sDowncalendar(): void {
+    this.calendarOptions = null; this.calObj = null; this.fullCalendarData = [];
+    this.loadingGif = 'show';
+    this.url = "/_api/web/lists/getByTitle('IT RSVP')/items?$select=Title,EndDate,EventDate,Event_x0020_Type,StartDate,ID,EndDate0&$filter=StartDate ge datetime'" + this.today.toISOString() + "'";
+    this._service.getlistItems(this.url).subscribe((data: any) => {
+      this.cal = data.d.results;
+      for (let i = 0; i < this.cal.length; i++) {
+        if (data.d.results[i].Event_x0020_Type == "Server down") {
+          this.calObj = {
+            title: data.d.results[i].Title,
+            start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+            end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+            backgroundColor: "#ff5252",
+            borderColor: "#ff5252",
+            className: "eventClass"
+          };
+          this.fullCalendarData.push(this.calObj);
+        }
+      }
+      this.loadingGif = '';
+      this.calendarOptions = {
+        editable: true,
+        eventLimit: false,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        events: this.fullCalendarData
+      };
+    })
+  }
+
+  fullCalendar(): void {
+    this.calendarOptions = null; this.calObj = null; this.fullCalendarData = [];
+    this.loadingGif = 'show';
+    this.url = "/_api/web/lists/getByTitle('IT RSVP')/items?$select=Title,EndDate,EventDate,Event_x0020_Type,StartDate,ID,EndDate0&$filter=StartDate ge datetime'" + this.today.toISOString() + "'";
+    this._service.getlistItems(this.url).subscribe((data: any) => {
+      this.cal = data.d.results;
+      for (let i = 0; i < this.cal.length; i++) {
+        switch (data.d.results[i].Event_x0020_Type) {
+          case "PTO":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#fa8d29",
+              borderColor: "#fa8d29",
+              className: "eventClass"
+            };
+            break;
+          case "Out of office":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#448aff",
+              borderColor: "#448aff",
+              className: "eventClass"
+            };
+            break;
+          case "System maintenance":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#11c15b",
+              borderColor: "#11c15b",
+              className: "eventClass"
+            };
+            break;
+          case "Server down":
+            this.calObj = {
+              title: data.d.results[i].Title,
+              start: moment(data.d.results[i].EventDate).format("YYYY-MM-DD"),
+              end: moment(data.d.results[i].EndDate).format("YYYY-MM-DD"),
+              backgroundColor: "#ff5252",
+              borderColor: "#ff5252",
+              className: "eventClass"
+            };
+        }
+        this.fullCalendarData.push(this.calObj);
+      }
+      this.loadingGif = '';
+      this.calendarOptions = {
+        editable: true,
+        eventLimit: false,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        events: this.fullCalendarData
+      };
+    })
+  }
+
+  eventClick(model: any, template: TemplateRef<any>) {
+    this.modalRef2 = this.modalService.show(
+      template, 
+      { class: 'gray modal-md' }
+    );
+    model = {
+      event: {
+        id: model.event.id,
+        start: model.event.start,
+        end: model.event.end,
+        title: model.event.title
+      }
+    }
+    this.displayEvent = model;
+    console.log(model);
+    this.modalRef = this.modalService.show(template);
+  }
+
+  // openModal(template: TemplateRef<any>) {
+    
+  //   this.showCalendar();
+      // this.modalRef = this.modalService.show(
+    //   template,
+    //   Object.assign(
+    //     {}, 
+    //     { class: 'gray modal-lg' }
+    //   )
+    // );
+  // }
+
+}
+
+<!-- <div class="modal fade" id="calendar" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">First modal</h4>
+      <button type="button" class="close pull-right" aria-label="Close" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-offset-1 col-lg-10 col-md-offset-1">
+            <div class="row">
+              <div class="text-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary" (click)="fullCalendar()">
+                    <i class="fa fa-calendar" aria-hidden="true"> </i> Full Calendar</button>
+                  <button type="button" class="btn btn-pto" (click)="ptocalendar()">
+                    <i class="fa fa-clock-o" aria-hidden="true"> </i> PTO</button>
+                  <button type="button" class="btn btn-ofo" (click)="ofocalendar()">
+                    <i class="fa fa-building-o" aria-hidden="true"> </i> Out of Office</button>
+                  <button type="button" class="btn btn-sysMain" (click)="sysMaincalendar()">
+                    <i class="fa fa-laptop" aria-hidden="true"> </i> System Maintenance</button>
+                  <button type="button" class="btn btn-sDown" (click)="sDowncalendar()">
+                    <i class="fa fa-server" aria-hidden="true"> </i> Server Down</button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="loadingGif">
+              <img class="loadingGif" src="/sites/it/SiteAssets/ITWhatshappening/loading.gif">
+            </div>
+            <div *ngIf="calendarOptions">
+              <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail)" [(eventsModel)]="events"></ng-fullcalendar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calendar" (click)="showCalendar();">
+            <i class="fa fa-calendar" aria-hidden="true"> </i> Show Monthly View
+          </button> -->
+

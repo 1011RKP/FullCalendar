@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+.fc-day-grid-event .fc-content {
+    white-space: inherit!important;
+    overflow: hidden;
+}
+.fc-content{
+    font-size: 14px!important;
+}
+.eventClass{
+    white-space: inherit!important;
+    font-size: 14px!important;  
+}
+.fc-center h2 {
+    font-weight: 500!important;
+}

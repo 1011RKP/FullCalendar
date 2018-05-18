@@ -1,0 +1,292 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.1/fullcalendar.min.css">
+<div class="main container">
+  <!-- <ng-container *ngFor="let info of announcementsData">
+    <div class="row" *ngIf="danger != null ">
+      <div class="alert alert-danger" role="alert" style="min-height: 16px;padding: 0px!important">
+        <marquee>
+          <h5>
+            <i class="fa fa-info-circle" aria-hidden="true"> </i>
+            {{ info.Title}}
+          </h5>
+        </marquee>
+      </div>
+    </div>
+    <div class="row" *ngIf="informarion != null ">
+      <div class="brighttheme ui-pnotify-container brighttheme-info ui-pnotify-shadow" role="alert" style="min-height: 16px;">
+        <marquee>
+          <h5>
+            <i class="fa fa-info-circle" aria-hidden="true"> </i>
+            {{ info.Title}}
+          </h5>
+        </marquee>
+      </div>
+    </div>
+    <div class="row" *ngIf="success != null ">
+      <div class="brighttheme ui-pnotify-container brighttheme-success ui-pnotify-shadow" role="alert" style="min-height: 16px;">
+        <marquee>
+          <h5>
+            <i class="fa fa-info-circle" aria-hidden="true"> </i>
+            {{ info.Title}}
+          </h5>
+        </marquee>
+      </div>
+    </div>
+  </ng-container> -->
+  <div class="row">
+    <div class="alert alert-custom">
+      <strong>Welcome !</strong> To What's Happening in IT.
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="row">
+        <form #resourses="ngForm" class="form-horizontal">
+          <div class="row">
+            <div class="form-group" [class.has-error]="searchEventControl.invalid && searchEventControl.touched" [class.has-success]="searchEventControl.valid">
+              <div class="col-md-3">
+                <label class="control-label">
+                  Search Event:
+                </label>
+              </div>
+              <div class="col-md-5">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar" (click)="bsDatepicker.show()"></span>
+                  </span>
+                  <input class="form-control" type="text" [(ngModel)]='searchEvent' name="searchEvent" #bsDatepicker="bsDaterangepicker" bsDaterangepicker
+                    [bsConfig]="dateSubmittedConfig" #searchEventControl="ngModel" required/>
+                </div>
+                <span class="help-block" *ngIf="searchEventControl.invalid && searchEventControl.touched">
+                  Please Select Date
+                </span>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-primary" type="button" [disabled]="resourses.invalid" (click)="onSearch();">
+                  Search
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="col-md-offset-1 col-md-9">
+          <ng-container *ngIf="searchdata == 'data'">
+            <div class="row alert alert-success">
+              <h4 style="text-decoration:underline">Search Results</h4>
+              <div class="row" *ngFor="let info of searchdataresults">
+                <div class="row-fluid">
+                  <strong>Event Title:- {{ info.Title}}</strong>
+                  <div class="row-fluid">
+                    <div class="col-md-2  col-sm-3 col-xs-3 dateBoderSearch">
+                      <span class="fa-stack fa-2x">
+                        <i class="fa fa-calendar-o fa-stack-2x"></i>
+                        <h4 class="month">{{ info.EventDate | date:'MMM'}}</h4>
+                        <h4 class="date">{{ info.EndDate | date:'dd'}}</h4>
+                      </span>
+                    </div>
+                    <div class="col-md-10 col-sm-9 col-xs-9 addmargin">
+                      <p>{{ info.EventDate | date:'MMM d, y, h:mm a'}} to {{ info.EndDate | date:'h:mm a'}}</p>
+                      <h5 style="text-decoration:none !important;">
+                        <span class="rsvpTitle">{{ info.Title}}</span>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <button type="button" style="float:right" class="btn btn-primary" (click)="showAllevents();">
+                <i class="fa fa-calendar-plus-o" aria-hidden="true"> </i> Show all Events</button>
+            </div>
+          </ng-container>
+          <div class="row" *ngIf="emptySearchResults == 'No Results'">
+            <div class="alert alert-danger">
+              <h4>Seqarch Results</h4>
+              <strong>There is no Events with the give date </strong>
+            </div>
+            <div class="row">
+              <button type="button" style="float:right" class="btn btn-primary" (click)="showAllevents();">
+                <i class="fa fa-calendar-plus-o" aria-hidden="true"> </i> Show all Events</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="onloadData == null">
+        <div class="row">
+          <h4 class="itEventsTitle">IT RSVP Events:- </h4>
+        </div>
+        <div class="row" *ngFor="let info of data | paginate: { itemsPerPage: 5, currentPage: p }">
+          <div class="row-fluid">
+            <div class="row-fluid">
+              <div class="col-md-2  col-sm-3 col-xs-3 dateBoder">
+                <span class="fa-stack fa-2x">
+                  <i class="fa fa-calendar-o fa-stack-2x"></i>
+                  <h4 class="month">{{ info.EventDate | date:'MMM'}}</h4>
+                  <h4 class="date">{{ info.EndDate | date:'dd'}}</h4>
+                </span>
+              </div>
+              <div class="col-md-10 col-sm-9 col-xs-9 addmargin">
+                <p>{{ info.EventDate | date:'MMM d, y, h:mm a'}} to {{ info.EndDate | date:'h:mm a'}}</p>
+                <h5 style="text-decoration:none !important;cursor:pointer!important" (click)="currentItemInfo(info, calendartemplate);">
+                  <span class="rsvpTitle">{{ info.Title}}</span>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+        </div>
+        <div class="row">
+          <button type="button" class="btn btn-primary" (click)="showCalendar(template);">
+            <i class="fa fa-calendar" aria-hidden="true"> </i> Show Monthly View
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">IT Calendar</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="mainModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-offset-1 col-lg-10 col-md-offset-1">
+        <div class="row">
+          <div class="text-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary" (click)="fullCalendar()">
+                <i class="fa fa-calendar" aria-hidden="true"> </i> Full Calendar</button>
+              <button type="button" class="btn btn-pto" (click)="ptocalendar()">
+                <i class="fa fa-clock-o" aria-hidden="true"> </i> PTO</button>
+              <button type="button" class="btn btn-ofo" (click)="ofocalendar()">
+                <i class="fa fa-building-o" aria-hidden="true"> </i> Out of Office</button>
+              <button type="button" class="btn btn-sysMain" (click)="sysMaincalendar()">
+                <i class="fa fa-laptop" aria-hidden="true"> </i> System Maintenance</button>
+              <button type="button" class="btn btn-sDown" (click)="sDowncalendar()">
+                <i class="fa fa-server" aria-hidden="true"> </i> Server Down</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="loadingGif">
+          <img class="loadingGif" src="/sites/it/SiteAssets/ITWhatshappening/loading.gif">
+        </div>
+        <div *ngIf="calendarOptions">
+          <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventClick)="eventClick($event.detail, templateNested)" [(eventsModel)]="events"></ng-fullcalendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateNested>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"> Current Event</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="childModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+        <table class="table table-striped">
+          <tbody style="background-color: #f9f9f9!important;border-radius:3px;">
+            <tr>
+              <td>
+                <h5 class="staticLable">
+                  Event Title :-
+                </h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedEvent.Title }}</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="staticLable">Event Start Date :-</h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedEvent.EventDate | date:'MMM d, y, h:mm:ss a' }}</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="staticLable">Event End Date :-</h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedEvent.EndDate | date:'MMM d, y, h:mm:ss a'}}</h5>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+              <td>
+                <h5 class="staticLable">Event Location :-</h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedEvent.Location }}</h5>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #calendartemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Current Event</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="calendartemplateModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+        <table class="table table-striped">
+          <tbody style="background-color: #f9f9f9!important;border-radius:3px;">
+            <tr>
+              <td>
+                <h5 class="staticLable">
+                  Event Title :-
+                </h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedCurrentEvent.Title }}</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="staticLable">Event Start Date :-</h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedCurrentEvent.EventDate | date:'MMM d, y, h:mm:ss a' }}</h5>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="staticLable">Event End Date :-</h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedCurrentEvent.EndDate | date:'MMM d, y, h:mm:ss a'}}</h5>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ddd;">
+              <td>
+                <h5 class="staticLable">Event Location :-</h5>
+              </td>
+              <td>
+                <h5 class="infoLable">{{this.selectedCurrentEvent.Location }}</h5>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-template>
